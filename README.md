@@ -15,11 +15,16 @@ The Hotel Room Reservation System is a software application designed to streamli
 **Screenshots:**
 - ![main menu](https://github.com/lleylawa/final-project/assets/150817035/0ad75fd9-46f0-4f88-8df9-8a5a5578efbf) :
    This screenshot showcases the main menu of the Hotel Room Reservation System, where users can choose various options such as booking a room, viewing customer information, and editing reservations.
+  
 - ![book a room](https://github.com/lleylawa/final-project/assets/150817035/d8c76c9c-658d-42e7-99f2-1f862ca7f125) :
    This screenshot demonstrates the process of adding a new reservation, including entering customer details, selecting a room, and specifying the duration of stay.
+  
 - ![show reservation](https://github.com/lleylawa/final-project/assets/150817035/1e850670-71fe-48ff-bca6-e6a129c1338e) :
   Here, users can view the details of a specific reservation, including the room number, guest name, room type, contact number, and total cost.
+  
 - ![rooms allotted](https://github.com/lleylawa/final-project/assets/150817035/92c4e883-0738-4167-abcc-ddfbd6718564) :
    This screenshot displays a list of all booked rooms, providing an overview of room availability in the hotel.
--  ![edit menu](https://github.com/lleylawa/final-project/assets/150817035/523056b4-95cb-4918-885f-6b7bda68d95b) ![edit menu(1)](https://github.com/lleylawa/final-project/assets/150817035/32a41d90-8cf8-4571-9faa-640f2321100e) :
-  This screenshots illustrate the interface for modifying a reservation, allowing users to update customer information or change the duration of stay.
+  
+-  ![edit menu](https://github.com/lleylawa/final-project/assets/150817035/523056b4-95cb-4918-885f-6b7bda68d95b)
+   ![edit menu(1)](https://github.com/lleylawa/final-project/assets/150817035/32a41d90-8cf8-4571-9faa-640f2321100e) :
+  This screenshots illustrate the interface for modifying a reservation, allowing users to update customer information or change the duration of stay, or delete a reservation.
