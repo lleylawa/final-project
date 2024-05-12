@@ -19,7 +19,6 @@ void delete_rec();
 void main_menu() {
     int choice;
     while (choice != 6) {
-        system("clear");
         cout << "\n\t\t\t *********************************";
         cout << "\n\t\t\t **HOTEL ROOM RESERVATION SYSTEM**";
         cout << "\n\t\t\t *********************************";
@@ -51,9 +50,8 @@ void main_menu() {
 }
 
 void add() {
-    system("clear");
     int r, flag;
-    ofstream fout("Record.txt", ios::app);
+    ofstream fout("Record.txt");
     cout << "\n\t\t\t +-----------------------+";
     cout << "\n\t\t\t | Rooms  |   Room Type  |";
     cout << "\n\t\t\t +-----------------------+";
@@ -106,7 +104,6 @@ void add() {
 }
 
 void display() {
-    system("clear");
     ifstream fin("Record.txt");
     int r;
     cout << "\n Enter Room Number: ";
@@ -137,7 +134,6 @@ void display() {
 }
 
 void rooms() {
-    system("clear");
     ifstream fin("Record.txt");
     cout << "\n\t\t\t    LIST OF ROOMS ALLOTED";
     cout << "\n\t\t\t   -----------------------";
@@ -159,7 +155,6 @@ void rooms() {
 
 
 void edit() {
-    system("clear");
     int choice, r;
     cout << "\n EDIT MENU";
     cout << "\n ---------";
@@ -167,7 +162,6 @@ void edit() {
     cout << "\n 2. Customer Check Out.";
     cout << "\n Enter your choice: ";
     cin >> choice;
-    system("clear");
     switch (choice) {
     case 1:
         modify();
@@ -204,7 +198,6 @@ int check(int r) {
 }
 
 void modify() {
-    system("clear");
     int ch, r;
     cout << "\n MODIFY MENU";
     cout << "\n -----------";
@@ -213,7 +206,6 @@ void modify() {
     cout << "\n 3. Modify Number of Days of Stay";
     cout << "\n Enter Your Choice: ";
     cin >> ch;
-    system("clear");
     cout << "\n Enter Room Number: ";
     cin >> r;
     switch (ch) {
@@ -368,7 +360,6 @@ void delete_rec() {
 }
 
 int main() {
-    system("clear");
     main_menu();
     return 0;
 }
