@@ -58,12 +58,11 @@ void main_menu() {
 void add() {
     system("cls");
     int r, flag;
-    // Open files for writing
-    ofstream mainFile("Main.txt");
-    ofstream deluxeFile("Deluxe.txt");
-    ofstream executiveFile("Executive.txt");
-    ofstream presidentialFile("Presidential.txt");
-    // Display room types
+    // Open files for writing outside the loop
+    ofstream mainFile("Main.txt", ios::app); // ios::app to append to file
+    ofstream deluxeFile("Deluxe.txt", ios::app);
+    ofstream executiveFile("Executive.txt", ios::app);
+    ofstream presidentialFile("Presidential.txt", ios::app);
     cout << "\n\t\t\t +-----------------------+";
     cout << "\n\t\t\t | Rooms  |   Room Type  |";
     cout << "\n\t\t\t +-----------------------+";
@@ -74,7 +73,6 @@ void add() {
     cout << "\n\n ENTER CUSTOMER DETAILS: ";
     cout << "\n\n Room Number: ";
     cin >> r;
-    // Check if the room is available
     flag = check(r);
     if (flag == 1)
         cout << "\n Sorry, Room is already booked.\n";
@@ -90,7 +88,6 @@ void add() {
             cin >> phone;
             cout << " Number of Days: ";
             cin >> days;
-            // Determine room type and cost based on room number
             if (r >= 1 && r <= 50) {
                 rtype = "Deluxe";
                 cost = days * 10000;
@@ -106,7 +103,6 @@ void add() {
                 cost = days * 15000;
                 presidentialFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
             }
-            // Write to main file
             mainFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
             cout << "\n Room has been booked.";
         }
@@ -114,13 +110,12 @@ void add() {
     cout << "\n Press any key to continue.";
     getchar();
     getchar();
-    // Close files
+    // Close files after adding all customers' details
     mainFile.close();
     deluxeFile.close();
     executiveFile.close();
     presidentialFile.close();
 }
-
 // Function to display customer information
 void display() {
     system("cls");
