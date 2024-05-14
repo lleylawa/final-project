@@ -1,7 +1,6 @@
-#include <iostream>
-#include <iomanip>
-#include <fstream>
-#include <string>
+#include<iostream>
+#include<iomanip>
+#include<fstream>
 
 using namespace std;
 
@@ -18,12 +17,13 @@ void modify_phone(int);
 void modify_days(int);
 void delete_rec();
 
-// Main menu function
+// Function to display the main menu
 void main_menu() {
     int choice = 0;
-    // Loop until user chooses to exit
-    while (choice != 5) {
+    // Loop until the user chooses to exit
+    while (choice != 6) {
         system("cls"); // Clear the screen
+        // Display the menu options
         cout << "\n\t\t\t *********************************";
         cout << "\n\t\t\t **HOTEL ROOM RESERVATION SYSTEM**";
         cout << "\n\t\t\t *********************************";
@@ -34,19 +34,20 @@ void main_menu() {
         cout << "\n\t\t\t\t5. Exit";
         cout << "\n\t\t\t\tEnter Your Choice: ";
         cin >> choice;
+        // Perform actions based on user's choice
         switch (choice) {
-        case 1: add(); // Call add function
+        case 1: add(); // Add a new booking
             break;
-        case 2: display(); // Call display function
+        case 2: display(); // Display customer information
             break;
-        case 3: rooms(); // Call rooms function
+        case 3: rooms(); // Display rooms allotted
             break;
-        case 4: edit(); // Call edit function
+        case 4: edit(); // Edit customer details
             break;
         case 5: return; // Exit the program
         default:
             {
-                cout << "\n\n\t\tWrong choice."; // Inform about wrong choice
+                cout << "\n\n\t\tWrong choice.";
                 cout << "\n\t\tPress any key to continue.";
                 getchar();
             }
@@ -54,15 +55,11 @@ void main_menu() {
     }
 }
 
-// Function to book a room
+// Function to add a new booking
 void add() {
-    system("cls");
+    system("cls"); // Clear the screen
     int r, flag;
-    // Open files for writing outside the loop
-    ofstream mainFile("Main.txt", ios::app); // ios::app to append to file
-    ofstream deluxeFile("Deluxe.txt", ios::app);
-    ofstream executiveFile("Executive.txt", ios::app);
-    ofstream presidentialFile("Presidential.txt", ios::app);
+    ofstream fout("output.txt", ios::app); // Open file for appending
     cout << "\n\t\t\t +-----------------------+";
     cout << "\n\t\t\t | Rooms  |   Room Type  |";
     cout << "\n\t\t\t +-----------------------+";
@@ -73,6 +70,7 @@ void add() {
     cout << "\n\n ENTER CUSTOMER DETAILS: ";
     cout << "\n\n Room Number: ";
     cin >> r;
+    // Check if the room is available or not
     flag = check(r);
     if (flag == 1)
         cout << "\n Sorry, Room is already booked.\n";
@@ -88,52 +86,49 @@ void add() {
             cin >> phone;
             cout << " Number of Days: ";
             cin >> days;
+            // Determine room type and cost based on room number
             if (r >= 1 && r <= 50) {
                 rtype = "Deluxe";
                 cost = days * 10000;
-                deluxeFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
             }
-            else if (r >= 51 && r <= 80) {
-                rtype = "Executive";
-                cost = days * 12500;
-                executiveFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+            else {
+                if (r >= 51 && r <= 80) {
+                    rtype = "Executive";
+                    cost = days * 12500;
+                }
+                else {
+                    if (r >= 81 && r <= 100) {
+                        rtype = "Presidential";
+                        cost = days * 15000;
+                    }
+                }
             }
-            else if (r >= 81 && r <= 100) {
-                rtype = "Presidential";
-                cost = days * 15000;
-                presidentialFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
-            }
-            mainFile << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+            // Write booking details to file
+            fout << r << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
             cout << "\n Room has been booked.";
         }
     }
     cout << "\n Press any key to continue.";
     getchar();
     getchar();
-    // Close files after adding all customers' details
-    mainFile.close();
-    deluxeFile.close();
-    executiveFile.close();
-    presidentialFile.close();
+    fout.close(); // Close the file
 }
-// Function to display customer information
+
+// Function to display customer information for a specific room
 void display() {
-    system("cls");
-    // Open files for reading
-    ifstream mainFile("Main.txt");
-    ifstream deluxeFile("Deluxe.txt");
-    ifstream executiveFile("Executive.txt");
-    ifstream presidentialFile("Presidential.txt");
-    int r, room_no;
+    system("cls"); // Clear the screen
+    ifstream fin("output.txt"); // Open file for reading
+    int r, room_no; 
     cout << "\n Enter Room Number: ";
     cin >> r;
     bool found = false;
     string name, phone, rtype;
     long days, cost;
-    // Search for the room number in the main file
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    // Read data from file and search for the specified room
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (r == room_no) {
             found = true;
+            // Display customer details
             cout << "\n Customer Details";
             cout << "\n ----------------";
             cout << "\n\n Room Number: " << r;
@@ -150,22 +145,14 @@ void display() {
     cout << "\n\n Press any key to continue.";
     getchar();
     getchar();
-    // Close files
-    mainFile.close();
-    deluxeFile.close();
-    executiveFile.close();
-    presidentialFile.close();
+    fin.close(); // Close the file
 }
 
-// Function to display all allotted rooms
+// Function to display all allotted rooms and customer information
 void rooms() {
-    system("cls");
-    // Open files for reading
-    ifstream mainFile("Main.txt");
-    ifstream deluxeFile("Deluxe.txt");
-    ifstream executiveFile("Executive.txt");
-    ifstream presidentialFile("Presidential.txt");
-    cout << "\n\t\t\t    LIST OF ROOMS ALLOTTED";
+    system("cls"); // Clear the screen
+    ifstream fin("output.txt"); // Open file for reading
+    cout << "\n\t\t\t    LIST OF ROOMS ALLOTED";
     cout << "\n\t\t\t   -----------------------";
     cout << "\n\n +---------+-----------------+---------------+-------------+";
     cout << "\n | Room No.|   Guest Name    |  Room Type    | Contact No. |";
@@ -173,24 +160,20 @@ void rooms() {
     int r;
     string name, phone, rtype;
     long days, cost;
-    // Display all customer information from the main file
-    while (mainFile >> r >> name >> phone >> days >> rtype >> cost) {
+    // Read data from file and display room allotments
+    while (fin >> r >> name >> phone >> days >> rtype >> cost) {
         cout << "\n | " << setw(7) << left << r << " | " << setw(15) << left << name << " | " << setw(13) << left << rtype << " | " << setw(11) << left << phone << " |";
     }
     cout << "\n +---------+-----------------+---------------+-------------+";
     cout << "\n\n\n\t\t\tPress any key to continue.";
     getchar();
     getchar();
-    // Close files
-    mainFile.close();
-    deluxeFile.close();
-    executiveFile.close();
-    presidentialFile.close();
+    fin.close(); // Close the file
 }
 
-// Function to edit customer details or check out
+// Function to edit customer details
 void edit() {
-    system("cls");
+    system("cls"); // Clear the screen
     int choice, r;
     cout << "\n EDIT MENU";
     cout << "\n ---------";
@@ -201,10 +184,10 @@ void edit() {
     system("cls");
     switch (choice) {
     case 1:
-        modify(); // Call modify function
+        modify(); // Modify customer information
         break;
     case 2:
-        delete_rec(); // Call delete_rec function
+        delete_rec(); // Check out customer
         break;
     default:
         cout << "\n Wrong Choice.";
@@ -217,27 +200,27 @@ void edit() {
 
 // Function to check room availability
 int check(int r) {
-    ifstream mainFile("Main.txt");
+    ifstream fin("output.txt"); // Open file for reading
     int room_no;
     string name, phone, rtype;
     long days, cost;
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (room_no == r) {
-            mainFile.close();
+            fin.close(); // Close the file
             return 1; // Room is booked
         }
     }
     if (r > 100) {
-        mainFile.close();
+        fin.close(); // Close the file
         return 2; // Room does not exist
     }
-    mainFile.close();
+    fin.close(); // Close the file
     return 0; // Room is vacant
 }
 
 // Function to modify customer information
 void modify() {
-    system("cls");
+    system("cls"); // Clear the screen
     int ch, r;
     cout << "\n MODIFY MENU";
     cout << "\n -----------";
@@ -250,11 +233,11 @@ void modify() {
     cout << "\n Enter Room Number: ";
     cin >> r;
     switch (ch) {
-    case 1: modify_name(r); // Call modify_name function
+    case 1: modify_name(r); // Modify customer name
         break;
-    case 2: modify_phone(r); // Call modify_phone function
+    case 2: modify_phone(r); // Modify customer phone number
         break;
-    case 3: modify_days(r); // Call modify_days function
+    case 3: modify_days(r); // Modify number of days of stay
         break;
     default: cout << "\n Wrong Choice";
         getchar();
@@ -265,19 +248,19 @@ void modify() {
 
 // Function to modify customer name
 void modify_name(int r) {
-    ifstream mainFile("Main.txt");
-    ofstream tempMainFile("tempMain.txt");
+    ifstream fin("output.txt"); // Open file for reading
+    ofstream fout("input.txt"); // Open file for writing
     int room_no;
     string name, phone, rtype;
     long days, cost;
     bool modified = false;
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (room_no == r) {
             cout << "\n Enter New Name: ";
             cin >> name;
             modified = true;
         }
-        tempMainFile << room_no << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+        fout << room_no << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
     }
     if (!modified)
         cout << "\n Sorry, Room is vacant.";
@@ -285,27 +268,27 @@ void modify_name(int r) {
         cout << "\n Customer Name has been modified.";
     getchar();
     getchar();
-    mainFile.close();
-    tempMainFile.close();
-    remove("Main.txt");
-    rename("tempMain.txt", "Main.txt");
+    fin.close(); // Close the file
+    fout.close(); // Close the file
+    remove("output.txt"); // Delete old file
+    rename("input.txt", "output.txt"); // Rename new file
 }
 
 // Function to modify customer phone number
 void modify_phone(int r) {
-    ifstream mainFile("Main.txt");
-    ofstream tempMainFile("tempMain.txt");
+    ifstream fin("output.txt"); // Open file for reading
+    ofstream fout("input.txt"); // Open file for writing
     int room_no;
     string name, phone, rtype;
     long days, cost;
     bool modified = false;
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (room_no == r) {
             cout << "\n Enter New Phone Number: ";
             cin >> phone;
             modified = true;
         }
-        tempMainFile << room_no << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+        fout << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
     }
     if (!modified)
         cout << "\n Sorry, Room is vacant.";
@@ -313,25 +296,24 @@ void modify_phone(int r) {
         cout << "\n Customer Phone Number has been modified.";
     getchar();
     getchar();
-    mainFile.close();
-    tempMainFile.close();
-    remove("Main.txt");
-    rename("tempMain.txt", "Main.txt");
+    fin.close(); // Close the file
+    fout.close(); // Close the file
+    remove("output.txt"); // Delete old file
+    rename("input.txt", "output.txt"); // Rename new file
 }
 
 // Function to modify number of days of stay
 void modify_days(int r) {
-    ifstream mainFile("Main.txt");
-    ofstream tempMainFile("tempMain.txt");
+    ifstream fin("output.txt"); // Open file for reading
+    ofstream fout("input.txt"); // Open file for writing
     int room_no;
     string name, phone, rtype;
     long days, cost;
     bool modified = false;
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (room_no == r) {
             cout << " Enter New Number of Days of Stay: ";
             cin >> days;
-            // Adjust cost based on room type
             if (room_no >= 1 && room_no <= 50) {
                 rtype = "Deluxe";
                 cost = days * 1000;
@@ -350,7 +332,7 @@ void modify_days(int r) {
             }
             modified = true;
         }
-        tempMainFile << room_no << " " << name << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+        fout << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
     }
     if (!modified)
         cout << "\n Sorry, Room is Vacant.";
@@ -358,10 +340,10 @@ void modify_days(int r) {
         cout << "\n Customer information is modified.";
     getchar();
     getchar();
-    mainFile.close();
-    tempMainFile.close();
-    remove("Main.txt");
-    rename("tempMain.txt", "Main.txt");
+    fin.close(); // Close the file
+    fout.close(); // Close the file
+    remove("output.txt"); // Delete old file
+    rename("input.txt", "output.txt"); // Rename new file
 }
 
 // Function to delete customer record
@@ -369,13 +351,13 @@ void delete_rec() {
     int r;
     cout << "\n Enter Room Number: ";
     cin >> r;
-    ifstream mainFile("Main.txt");
-    ofstream tempMainFile("tempMain.txt");
+    ifstream fin("output.txt"); // Open file for reading
+    ofstream fout("input.txt"); // Open file for writing
     int room_no;
     string name, phone, rtype;
     long days, cost;
     bool found = false;
-    while (mainFile >> room_no >> name >> phone >> days >> rtype >> cost) {
+    while (fin >> room_no >> name >> phone >> days >> rtype >> cost) {
         if (room_no == r) {
             found = true;
             cout << "\n Name: " << name;
@@ -386,20 +368,20 @@ void delete_rec() {
             char ch;
             cin >> ch;
             if (ch == 'n')
-                tempMainFile << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+                fout << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
             else
                 cout << "\n Customer Checked Out.";
         }
         else
-            tempMainFile << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
+            fout << room_no << " " << name << " " << " " << phone << " " << days << " " << rtype << " " << cost << endl;
     }
-    mainFile.close();
-    tempMainFile.close();
+    fin.close(); // Close the file
+    fout.close(); // Close the file
     if (!found)
         cout << "\n Sorry, Room is Vacant.";
     else {
-        remove("Main.txt");
-        rename("tempMain.txt", "Main.txt");
+        remove("output.txt"); // Delete old file
+        rename("input.txt", "output.txt"); // Rename new file
     }
     getchar();
     getchar();
@@ -407,7 +389,7 @@ void delete_rec() {
 
 // Main function
 int main() {
-    system("cls");
-    main_menu(); // Call main menu function
+    system("cls"); // Clear the screen
+    main_menu(); // Display the main menu
     return 0;
 }
