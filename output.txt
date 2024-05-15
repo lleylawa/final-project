@@ -1,0 +1,3 @@
+10 Erika 999555111 5 Deluxe 50000
+70 Aidana 999111444 4 Executive 50000
+90 Aruuke 999222555 3 Presidential 45000
