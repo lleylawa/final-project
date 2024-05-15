@@ -57,6 +57,11 @@ This is a C++ program that helps to manage hotel room reservations. Users can bo
 
 - **Exit.** If you enter "5" in main menu, you can exit the program
 
+#### Presentation:
+```markdown
+https://1drv.ms/p/c/65a53b38da9c5205/Ea2fjxivyjdApKuYa19iVygBC6kCFh6mO4PI-Usdsv0Nvg
+```
+
 
 
 
