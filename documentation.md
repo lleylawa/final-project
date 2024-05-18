@@ -4,31 +4,29 @@
 The Hotel Room Reservation System is designed to manage bookings, customer information, and room allotments for a hotel. It allows hotel staff to perform various tasks such as adding new bookings, displaying customer information, editing customer details, and checking out customers.
 
 ## Design Decisions
-- **Modular Design**: The codebase is divided into functions and modules to enhance readability and maintainability.
-- **File-based Storage**: Customer and booking information is stored in a text file (`output.txt`). This approach simplifies data management and persistence.
-- **User Interface**: The user interface is text-based, utilizing the console for input and output. This design choice ensures ease of use.
-
-## Algorithms Used
-- **Room Availability Check**: When adding a new booking, the system checks if the specified room is available by reading through the booking records.
-- **Searching and Modifying Records**: Functions like `display`, `modify`, and `delete_rec` utilize file input/output operations to search, modify, and delete customer records efficiently.
-
-## Data Structures
-- **File Format**: The system stores booking records in a structured format within the text file (`output.txt`). Each record contains room number, customer name, phone number, days of stay, room type, and cost.
-- **Variables**: Simple variables are used to store room numbers, customer names, phone numbers, days of stay, room types, and costs.
+- **Data Persistence**: Customer data is stored in a file `(output.txt)` to ensure that the information is retained between program runs.
+- **Data Structure**: A vector is used to store customer records in memory due to its dynamic size and ease of use for sequential data.
+- **Modular Design**: The program is divided into functions that handle specific tasks, making the code more organized and easier to maintain.
+  
+## Algorithms and Data Structures
+- **Struct Customer**: This struct represents the customer data, encapsulating room number, name, phone, days of stay, room type, and cost.
+- **Vector customers**: A global vector that holds all customer records, allowing efficient addition, deletion, and modification of records.
+- **File Operations**: Functions load_data and save_data handle reading from and writing to the file, respectively, ensuring data persistence.
 
 ## Functions/Modules
-1. **`main_menu()`**: Displays the main menu and handles user input to navigate through different functionalities.
-2. **`add()`**: Allows users to add a new booking by specifying customer details and room number.
-3. **`display()`**: Displays customer information for a specified room number.
-4. **`rooms()`**: Displays all allotted rooms and their corresponding customer information.
-5. **`edit()`**: Provides options to edit customer details or check out customers.
-6. **`check()`**: Allows to check room availability.
-7. **`modify()`**: Sub-menu for modifying customer information, such as name, phone number, or days of stay.
-8. **`modify_name()`**: Modifies the customer name for a specified room.
-9. **`modify_phone()`**: Modifies the customer phone number for a specified room.
-10. **`modify_days()`**: Modifies the number of days of stay for a specified room.
-11. **`delete_rec()`**: Deletes customer record.
-
+1. **`load_data()`**: Loads customer data from the file into the global customers vector.
+2. **`save_data()`**: Writes customer data from the customers vector to the file. Ensures data is saved before the program exits.
+3. **`main_menu()`**: Displays the main menu and handles user input. Calls appropriate functions based on user choices. Loads data at the start and saves data before exiting.
+4. **`add()`**: Handles room booking. Prompts user for customer details and checks room availability using check(). Calculates the cost based on room type and number of days.
+5. **`display()`**: Displays customer information for a specific room. Searches the customers vector for the specified room number.
+6. **`rooms()`**: Displays all allotted rooms and corresponding customer information. Iterates through the customers vector and prints details.
+7. **`edit()`**: Provides a menu for editing customer details or checking out. Calls modify() for editing and delete_rec() for checking out.
+8. **`check(int r)`**: Checks the status of a room. Returns 1 if the room is booked, 2 if the room does not exist, and 0 if the room is vacant.
+9. **`modify()`**: Provides options to modify name, phone number, or number of days of stay. Calls corresponding modify functions based on user choice.
+10. **`modify_name(int r)`**: Modifies the name of the customer in the specified room.
+11. **`modify_phone(int r)`**: Modifies the phone number of the customer in the specified room.
+12. **`modify_days(int r)`**: Modifies the number of days of stay and recalculates the cost for the customer in the specified room.
+13. **`delete_rec()`**: Deletes the customer record for the specified room number, effectively checking them out.Confirms the check-out action with the user before deletion.
 
 ## How to Use
 1. **Compilation**: Compile the source code using a C++ compiler.
